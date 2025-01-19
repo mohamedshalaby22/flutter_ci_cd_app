@@ -1,0 +1,17 @@
+default_platform(:android)
+
+platform :android do
+  desc "first firebase app distribution for android"
+  lane :deploy_firebase_app_distribution do
+    sh "flutter build apk --no-tree-shake-icons"
+    firebase_cli_token = ENV['FIREBASE_CLI_TOKEN']
+    firebase_app_distribution(
+      app: "1:987304195504:android:cc85f6a2eee6f0dbe39275",
+      groups: "testers",
+      release_notes: "first release from fastlane script",
+      firebase_cli_token: firebase_cli_token,
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      android_artifact_type: "APK",
+    )
+  end
+end
